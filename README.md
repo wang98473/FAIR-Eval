@@ -1,6 +1,6 @@
 # FAIR-Eval: Feature-Augmented IRT for Reliable and Efficient LLM Benchmarking
 
-Core code for **FAIR-Eval**, a feature-augmented semantic IRT pipeline for LLM benchmarking.
+FAIR-Eval is a feature-augmented semantic IRT pipeline for reliable and efficient LLM benchmarking.
 
 ![FAIR-Eval architecture](assets/figures/fdc_model.png)
 
@@ -8,21 +8,34 @@ Core code for **FAIR-Eval**, a feature-augmented semantic IRT pipeline for LLM b
 
 ## Overview
 
-Given prepared item tables and model response tables, FAIR-Eval:
+The released pipeline supports four stages:
 
 1. builds a unified HDF5 benchmark file,
 2. trains a semantic calibration model with item-level cross-validation,
 3. exports item discrimination and difficulty parameters, and
 4. exports ranked model ability (`theta`) estimates.
 
-## Repository Contents
+## Code Release
 
-- `build_hdf5_from_prepared.py`: converts prepared response/item parquet files into a single HDF5 file.
-- `calibration_model_train.py`: trains the semantic 2PL calibration model with cross-validation.
-- `item_params_inference.py`: exports item-level IRT parameters (`a`, `b`) from a trained checkpoint.
-- `theta_inference.py`: exports model-level ability estimates (`theta`) from a trained checkpoint.
+The main release includes:
 
-## Data Format
+- `build_hdf5_from_prepared.py` for packaging prepared response and item tables into a single HDF5 benchmark file
+- `calibration_model_train.py` for semantic 2PL calibration with item-level cross-validation
+- `item_params_inference.py` for exporting item discrimination and difficulty parameters
+- `theta_inference.py` for exporting model-level ability estimates
+- `hle_rebuild/` for reconstructing HLE-derived items and responses from user-provided upstream data
+
+## Public Data Release
+
+The public FAIR-Eval data release includes:
+
+- `irt_data_items.parquet`
+- `irt_data_responses.parquet`
+- `irt_data.hdf5`
+
+This public release is derived from `stair-lab/reeval` and `SuperGPQA` and excludes HLE-derived content. The `hle_rebuild/` directory provides reconstruction scripts for users who independently obtain the upstream HLE source data and comply with its access and redistribution conditions.
+
+## Input Format
 
 `build_hdf5_from_prepared.py` expects:
 
@@ -34,11 +47,19 @@ Optional item columns include:
 - `question_embedding`
 - `rationale` or `solution`
 - `rationale_embedding`
-- item feature columns such as question-length, answer-length, interaction, and task-type features
+- item-level feature columns such as question-length, answer-length, interaction, and task-type features
 
 ## Quick Start
 
-### 1. Build the HDF5 benchmark file
+Use Python 3.10 or newer.
+
+```bash
+pip install -r requirements.txt
+```
+
+If you need a CUDA-enabled PyTorch build, install the matching wheel from the official PyTorch index for your platform.
+
+### 1. Build the benchmark file
 
 ```bash
 python build_hdf5_from_prepared.py \
@@ -88,15 +109,15 @@ python theta_inference.py \
 - `items_params.csv`: inferred item discrimination and difficulty parameters
 - `theta_estimates.csv`: ranked model ability estimates
 
-## Environment
+## HLE Reconstruction
 
-Use Python 3.10 or newer. Install the base dependencies with:
+The public release excludes HLE-derived rows. Users who need the HLE-derived portion should use the scripts under `hle_rebuild/` together with:
 
-```bash
-pip install -r requirements.txt
-```
+- an authorized local copy of the upstream HLE data
+- the released subset ID list
+- the released HLE response table keyed by `question_id`
 
-If you need a CUDA-enabled PyTorch build, install the matching wheel from the official PyTorch index for your platform.
+The `hle_rebuild/` workflow additionally uses `openai` and optionally `spacy`.
 
 ## Citation
 
