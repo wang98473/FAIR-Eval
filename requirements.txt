@@ -1,0 +1,16 @@
+# Base dependencies for the four released FAIR-Eval scripts:
+# - build_hdf5_from_prepared.py
+# - calibration_model_train.py
+# - item_params_inference.py
+# - theta_inference.py
+# Python 3.10+ is required by the current type annotation syntax.
+# If you need a CUDA-enabled build of PyTorch, install the matching wheel
+# from https://pytorch.org/get-started/locally/ after or instead of `pip install -r requirements.txt`.
+h5py
+matplotlib
+numpy
+pandas
+pyarrow
+scikit-learn
+torch
+tqdm
