@@ -1,10 +1,10 @@
-# FAIR-Eval: Feature-Augmented IRT for Reliable and Efficient LLM Benchmarking
+# FAIR-Eval: Reliable and Efficient Adaptive Benchmarking for Large Language Models
 
 FAIR-Eval is a feature-augmented semantic IRT pipeline for reliable and efficient LLM benchmarking.
 
-![FAIR-Eval architecture](assets/figures/fdc_model.png)
+![FAIR-Eval architecture](assets/figures/framework.png)
 
-[PDF version](assets/figures/fdc_model.pdf)
+[PDF version](assets/figures/framework.pdf)
 
 ## Overview
 
