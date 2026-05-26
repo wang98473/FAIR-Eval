@@ -118,15 +118,3 @@ The public release excludes HLE-derived rows. Users who need the HLE-derived por
 - the released HLE response table keyed by `question_id`
 
 The `hle_rebuild/` workflow additionally uses `openai` and optionally `spacy`.
-
-## Citation
-
-If you use this code, please cite:
-
-```bibtex
-@misc{fair_eval,
-  title={FAIR-Eval: Feature-Augmented IRT for Reliable and Efficient LLM Benchmarking},
-  author={To be updated},
-  year={2026}
-}
-```
